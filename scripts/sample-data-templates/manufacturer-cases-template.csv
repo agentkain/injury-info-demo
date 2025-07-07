@@ -1,0 +1,11 @@
+Company,Product,Injury Type,Settlement Amount,Year,Status,Severity,Case Name
+Johnson & Johnson,Talcum Powder,Ovarian Cancer,$2,000,000,2023,Settled,High,Smith v. J&J
+Bayer,Roundup,Non-Hodgkin Lymphoma,$1,500,000,2022,Settled,High,Johnson v. Bayer
+3M,Earplugs,Hearing Loss,$1,200,000,2023,Settled,Medium,Williams v. 3M
+Pfizer,Zantac,Bladder Cancer,$800,000,2022,Settled,High,Davis v. Pfizer
+Merck,Vioxx,Heart Attack,$1,800,000,2021,Settled,High,Miller v. Merck
+DePuy,ASR Hip Implant,Metal Poisoning,$2,500,000,2023,Settled,High,Wilson v. DePuy
+Boston Scientific,Transvaginal Mesh,Pelvic Pain,$1,100,000,2022,Settled,Medium,Taylor v. Boston Scientific
+Stryker,Rejuvenate Hip,Metallosis,$1,900,000,2023,Settled,High,Anderson v. Stryker
+Ethicon,Physiomesh,Hernia Recurrence,$750,000,2022,Settled,Medium,Martinez v. Ethicon
+Allergan,Textured Breast Implants,BIA-ALCL,$3,000,000,2023,Settled,High,Garcia v. Allergan 

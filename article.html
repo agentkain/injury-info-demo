@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Article... | Injury Information Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .article-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .ai-chat-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .ai-chat-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .ai-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .ai-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .ai-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .ai-response {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #c33;
+            margin: 1rem 0;
+        }
+
+        .related-articles {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .related-articles h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .related-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Chat Overlay Styles */
+        .chat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .close-chat:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-input-container {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .chat-send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .chat-message {
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .chat-message.user {
+            background: #eef2ff;
+            color: #333;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .chat-message.assistant {
+            background: #f8f9fa;
+            color: #333;
+            align-self: flex-start;
+            border: 1px solid #e9ecef;
+        }
+
+        .chat-message.loading {
+            background: #f8f9fa;
+            color: #666;
+            align-self: flex-start;
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                margin: 0 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .ai-input-group {
+                flex-direction: column;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-container {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .chat-messages {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Injury Information Center</div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#articles">Articles</a>
+                <a href="/#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> > <span id="breadcrumb-title">Loading...</span>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading article...</p>
+        </div>
+
+        <div id="article-content" style="display: none;">
+            <div class="article-header">
+                <h1 id="article-title" class="article-title"></h1>
+                <p id="article-description" class="article-description"></p>
+                <div class="article-meta">
+                    <span>Last updated: <span id="article-date">Today</span></span>
+                    <span>Reading time: <span id="reading-time">5 min</span></span>
+                </div>
+            </div>
+
+            <div class="article-content">
+                <div class="content-section">
+                    <h2>Overview</h2>
+                    <p id="article-overview"></p>
+                </div>
+
+                <div class="content-section">
+                    <h2>Symptoms</h2>
+                    <ul id="article-symptoms"></ul>
+                </div>
+
+                <div class="content-section">
+                    <h2>Causes</h2>
+                    <ul id="article-causes"></ul>
+                </div>
+
+                <div class="content-section">
+                    <h2>Treatment Options</h2>
+                    <ul id="article-treatments"></ul>
+                </div>
+
+                <div class="content-section">
+                    <h2>Legal Options</h2>
+                    <ul id="article-legal-options"></ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>💡 Settlement Information</h3>
+                    <p id="article-settlements"></p>
+                </div>
+            </div>
+
+            <div class="ai-chat-section">
+                <h2>🤖 Ask AI About This Case</h2>
+                <p>Have specific questions about this case? Ask our AI assistant for personalized information.</p>
+                
+                <div class="ai-input-group">
+                    <input type="text" id="ai-question" class="ai-input" placeholder="Ask about symptoms, settlements, legal options..." />
+                    <button onclick="openChatWithQuestion()" class="ai-button">Ask AI</button>
+                </div>
+
+                <div id="ai-conversation" class="ai-response" style="display: none; flex-direction: column; gap: 1rem;"></div>
+            </div>
+
+            <div class="related-articles">
+                <h2>Related Articles</h2>
+                <div id="related-grid" class="related-grid">
+                    <!-- Related articles will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <h3>Error Loading Article</h3>
+            <p id="error-message"></p>
+            <p><a href="/">Return to Home</a></p>
+        </div>
+    </div>
+
+    <!-- Chat Overlay -->
+    <div id="chatOverlay" class="chat-overlay">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>🤖 AI Assistant</h3>
+                <button class="close-chat" onclick="closeChat()">&times;</button>
+            </div>
+            <div id="chatMessages" class="chat-messages">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="chat-input-container">
+                <div class="chat-input-group">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Ask about this case..." />
+                    <button onclick="sendChatMessage()" class="chat-send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Injury Information Center. All rights reserved.</p>
+        <p>This information is for educational purposes only and should not be considered legal or medical advice.</p>
+    </footer>
+
+    <script>
+        let currentArticle = null;
+        let allArticles = [];
+        // Centralized AI Configuration
+        const AI_CONFIG = {
+            // OpenAI API Settings
+            api: {
+                model: 'gpt-4o-mini',
+                temperature: 0.7,
+                max_tokens: 500,
+                baseURL: window.location.origin
+            },
+
+            // System Messages
+            systemMessages: {
+                // General injury and legal information assistant
+                general: `You are an AI assistant specializing in injury and legal information. Please provide helpful, accurate information about injury cases, legal rights, medical conditions, settlements, and related topics. Be empathetic and informative, but always recommend consulting with qualified medical professionals or attorneys for specific situations. Keep your response concise (1-2 paragraphs or a short list).`,
+
+                // Article-specific context
+                articleContext: (articleTitle, articleContent) => `You are an AI assistant specializing in injury and legal information. The user is asking about: ${articleTitle}. 
+
+Article Context:
+${articleContent}
+
+Please provide helpful, accurate information based on this specific article. Be empathetic and informative, but always recommend consulting with qualified medical professionals or attorneys for specific situations.`,
+
+                // Legal referral trigger
+                legalReferral: `You are an AI assistant specializing in injury and legal information. Please provide helpful, accurate information about injury cases, legal rights, medical conditions, settlements, and related topics. Be empathetic and informative, but always recommend consulting with qualified medical professionals or attorneys for specific situations. Keep your response concise (1-2 paragraphs or a short list).
+
+IMPORTANT: If the user asks about legal options, filing claims, consulting attorneys, or seeking legal advice, mention that they can start their claim at legalinjuryadvocates.com.`
+            },
+
+            // Response Formatting
+            formatting: {
+                // Keywords that trigger legal referral
+                legalReferralKeywords: [
+                    'consult', 'speak to', 'talk to', 'meet with', 'attorney', 'lawyer', 
+                    'file a claim', 'legal advice', 'legal options', 'seek legal', 
+                    'recommend', 'contact a lawyer', 'contact an attorney', 'how to file',
+                    'where to file', 'get compensation', 'payout', 'settlement'
+                ],
+
+                // Legal referral message
+                legalReferralMessage: `<br><br><strong>➡️ You can start your claim at <a href="https://legalinjuryadvocates.com" target="_blank">legalinjuryadvocates.com</a>.</strong>`
+            },
+
+            // Error Messages
+            errors: {
+                connectionFailed: 'Unable to connect to the server. Please make sure the server is running.',
+                apiKeyInvalid: 'API key authentication failed. Please check your OpenAI API key.',
+                rateLimitExceeded: 'Rate limit exceeded. Please wait a moment and try again.',
+                serviceUnavailable: 'OpenAI service is temporarily unavailable. Please try again later.',
+                generic: 'An unexpected error occurred. Please try again.'
+            },
+
+            // UI Settings
+            ui: {
+                loadingMessage: 'AI is thinking...',
+                thinkingMessage: 'AI is analyzing your question...',
+                errorPrefix: 'Sorry, I encountered an error: '
+            }
+        };
+
+        // Helper function to create API request body
+        function createApiRequest(message, systemMessage = null, options = {}) {
+            return {
+                message,
+                systemMessage: systemMessage || AI_CONFIG.systemMessages.general,
+                options: {
+                    model: options.model || AI_CONFIG.api.model,
+                    temperature: options.temperature || AI_CONFIG.api.temperature,
+                    max_tokens: options.max_tokens || AI_CONFIG.api.max_tokens,
+                    ...options
+                }
+            };
+        }
+
+        // Helper function to check if response should include legal referral
+        function shouldIncludeLegalReferral(text) {
+            const lowerText = text.toLowerCase();
+            return AI_CONFIG.formatting.legalReferralKeywords.some(keyword => 
+                lowerText.includes(keyword.toLowerCase())
+            );
+        }
+
+        // Helper function to add legal referral to response
+        function addLegalReferralIfNeeded(text) {
+            if (shouldIncludeLegalReferral(text)) {
+                return text + AI_CONFIG.formatting.legalReferralMessage;
+            }
+            return text;
+        }
+
+        // Helper function to get error message based on error type
+        function getErrorMessage(error) {
+            const message = error.message || '';
+            
+            if (message.includes('401')) {
+                return AI_CONFIG.errors.apiKeyInvalid;
+            } else if (message.includes('429')) {
+                return AI_CONFIG.errors.rateLimitExceeded;
+            } else if (message.includes('500')) {
+                return AI_CONFIG.errors.serviceUnavailable;
+            } else if (message.includes('fetch') || message.includes('connect')) {
+                return AI_CONFIG.errors.connectionFailed;
+            } else {
+                return AI_CONFIG.errors.generic;
+            }
+        }
+
+        let conversationHistory = [];
+        let chatHistory = [];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticle();
+            loadAllArticles();
+            setupChatInput();
+        });
+
+        async function loadArticle() {
+            const slug = window.location.pathname.split('/').pop();
+            
+            try {
+                const response = await fetch(`/api/articles/${slug}`);
+                
+                if (!response.ok) {
+                    throw new Error('Article not found');
+                }
+                
+                currentArticle = await response.json();
+                displayArticle(currentArticle);
+                
+            } catch (error) {
+                console.error('Error loading article:', error);
+                showError('Article not found or could not be loaded.');
+            }
+        }
+
+        async function loadAllArticles() {
+            try {
+                const response = await fetch('/api/articles');
+                allArticles = await response.json();
+            } catch (error) {
+                console.error('Error loading articles:', error);
+            }
+        }
+
+        function displayArticle(article) {
+            // Hide loading, show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('article-content').style.display = 'block';
+            
+            // Update page title
+            document.title = `${article.title} | Injury Information Center`;
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-title').textContent = article.title;
+            
+            // Update article content
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-description').textContent = article.description;
+            document.getElementById('article-overview').textContent = article.content.overview;
+            
+            // Update lists
+            updateList('article-symptoms', article.content.symptoms);
+            updateList('article-causes', article.content.causes);
+            updateList('article-treatments', article.content.treatments);
+            updateList('article-legal-options', article.content.legalOptions);
+            
+            // Update settlements
+            document.getElementById('article-settlements').textContent = article.content.settlements;
+            
+            // Load related articles
+            loadRelatedArticles(article);
+        }
+
+        function updateList(elementId, items) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+        }
+
+        function loadRelatedArticles(currentArticle) {
+            const relatedGrid = document.getElementById('related-grid');
+            const relatedArticles = allArticles.filter(article => 
+                article.id !== currentArticle.id
+            ).slice(0, 3);
+            
+            relatedGrid.innerHTML = relatedArticles.map(article => `
+                <div class="related-card" onclick="window.location.href='/article/${article.slug}'">
+                    <h3>${article.title}</h3>
+                    <p>${article.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error-message').textContent = message;
+        }
+
+        async function askAI() {
+            const question = document.getElementById('ai-question').value.trim();
+            if (!question) return;
+            
+            // Add user message to history
+            conversationHistory.push({ role: 'user', content: question });
+            renderConversation();
+            
+            const aiConversationDiv = document.getElementById('ai-conversation');
+            aiConversationDiv.style.display = 'flex';
+            
+            // Show loading
+            conversationHistory.push({ role: 'assistant', content: '<div class="loading"><div class="spinner"></div><p>AI is thinking...</p></div>', loading: true });
+            renderConversation();
+            
+            try {
+                const systemMessage = AI_CONFIG.systemMessages.articleContext(
+                    currentArticle.title,
+                    currentArticle.content.overview
+                );
+
+                const requestBody = createApiRequest(question, systemMessage, {
+                    max_tokens: 400
+                });
+
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get AI response');
+                }
+
+                const data = await response.json();
+                // Remove loading
+                conversationHistory = conversationHistory.filter(msg => !msg.loading);
+                
+                // Add legal referral if needed
+                let aiText = addLegalReferralIfNeeded(data.response);
+                
+                conversationHistory.push({ role: 'assistant', content: aiText });
+                renderConversation();
+                document.getElementById('ai-question').value = '';
+            } catch (error) {
+                conversationHistory = conversationHistory.filter(msg => !msg.loading);
+                conversationHistory.push({ role: 'assistant', content: `<div class=\"error\"><p>${AI_CONFIG.ui.errorPrefix}${getErrorMessage(error)}</p><p>Please try again or consult with a qualified professional.</p></div>` });
+                renderConversation();
+            }
+        }
+
+        function renderConversation() {
+            const aiConversationDiv = document.getElementById('ai-conversation');
+            if (conversationHistory.length === 0) {
+                aiConversationDiv.style.display = 'none';
+                aiConversationDiv.innerHTML = '';
+                return;
+            }
+            aiConversationDiv.style.display = 'flex';
+            aiConversationDiv.innerHTML = conversationHistory.map(msg => {
+                if (msg.loading) return msg.content;
+                if (msg.role === 'user') {
+                    return `<div style=\"background:#eef2ff;padding:10px 15px;border-radius:8px;align-self:flex-end;max-width:80%;margin-bottom:2px;\"><strong>You:</strong> ${escapeHtml(msg.content)}</div>`;
+                } else {
+                    // Convert markdown to HTML for AI responses
+                    return `<div style=\"background:#f8f9fa;padding:10px 15px;border-radius:8px;align-self:flex-start;max-width:80%;margin-bottom:2px;\"><strong>AI:</strong> ${markdownToHtml(msg.content)}</div>`;
+                }
+            }).join('');
+        }
+
+        // Enhanced Markdown to HTML converter for AI responses
+        function markdownToHtml(md) {
+            if (!md) return '';
+            let html = md;
+            
+            // Bold **text** or __text__
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+            
+            // Italic *text* or _text_
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+            
+            // Handle numbered lists (1. item)
+            html = html.replace(/^\d+\.\s+(.*?)$/gm, '<li>$1</li>');
+            
+            // Handle bullet lists (- item, * item, • item)
+            html = html.replace(/^[-*•]\s+(.*?)$/gm, '<li>$1</li>');
+            
+            // Wrap consecutive <li> elements in <ul>
+            html = html.replace(/(<li>.*?<\/li>)+/gs, function(match) {
+                return '<ul>' + match + '</ul>';
+            });
+            
+            // Handle line breaks and paragraphs
+            html = html.replace(/\n{3,}/g, '</p><p>');
+            html = html.replace(/\n{2}/g, '<br><br>');
+            html = html.replace(/\n/g, '<br>');
+            
+            // Wrap in paragraph tags if not already wrapped
+            if (!html.startsWith('<')) {
+                html = '<p>' + html + '</p>';
+            }
+            
+            return html;
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>\"]+/g, function(c) {
+                return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];
+            });
+        }
+
+        // Typing effect function
+        async function typeText(elementId, text, speed = 30) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            element.innerHTML = '';
+            
+            // Handle HTML tags properly
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = text;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            
+            let currentIndex = 0;
+            let htmlIndex = 0;
+            let isInTag = false;
+            let tagBuffer = '';
+            
+            while (currentIndex < text.length) {
+                const char = text[currentIndex];
+                
+                if (char === '<') {
+                    isInTag = true;
+                    tagBuffer = char;
+                } else if (char === '>') {
+                    isInTag = false;
+                    tagBuffer += char;
+                    element.innerHTML += tagBuffer;
+                    tagBuffer = '';
+                } else if (isInTag) {
+                    tagBuffer += char;
+                } else {
+                    element.innerHTML += char;
+                }
+                
+                currentIndex++;
+                
+                // Add a small delay for typing effect
+                if (!isInTag) {
+                    await new Promise(resolve => setTimeout(resolve, speed));
+                }
+            }
+            
+            // Add any remaining tag buffer
+            if (tagBuffer) {
+                element.innerHTML += tagBuffer;
+            }
+        }
+
+        // Find related articles function
+        function findRelatedArticles(query, articles) {
+            const lowerQuery = query.toLowerCase();
+            const scored = articles.map(item => {
+                let score = 0;
+                
+                // Check title
+                if (item.title.toLowerCase().includes(lowerQuery)) score += 3;
+                
+                // Check description
+                if (item.description.toLowerCase().includes(lowerQuery)) score += 2;
+                
+                // Check content
+                if (item.content.overview.toLowerCase().includes(lowerQuery)) score += 1;
+                
+                // Check individual words
+                const queryWords = lowerQuery.split(' ').filter(word => word.length > 2);
+                queryWords.forEach(word => {
+                    if (item.title.toLowerCase().includes(word)) score += 1;
+                    if (item.description.toLowerCase().includes(word)) score += 0.5;
+                });
+                
+                return { ...item, score };
+            }).filter(item => item.score > 0)
+              .sort((a, b) => b.score - a.score)
+              .slice(0, 3);
+
+            return scored;
+        }
+
+        // Chat Overlay Functions
+        function setupChatInput() {
+            const aiQuestionInput = document.getElementById('ai-question');
+            const chatInput = document.getElementById('chatInput');
+            
+            // Allow Enter key to submit AI question (existing functionality)
+            aiQuestionInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    openChatWithQuestion();
+                }
+            });
+            
+            // Allow Enter key to send chat message
+            chatInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+        }
+
+        function openChatWithQuestion() {
+            const question = document.getElementById('ai-question').value.trim();
+            if (!question) return;
+            
+            // Show chat overlay
+            showChatOverlay();
+            
+            // Transfer the question to chat input and send it
+            document.getElementById('chatInput').value = question;
+            document.getElementById('ai-question').value = '';
+            
+            // Send the message automatically
+            sendChatMessage();
+        }
+
+        function showChatOverlay() {
+            document.getElementById('chatOverlay').style.display = 'flex';
+            document.getElementById('chatInput').focus();
+        }
+
+        function closeChat() {
+            document.getElementById('chatOverlay').style.display = 'none';
+        }
+
+        async function sendChatMessage() {
+            const message = document.getElementById('chatInput').value.trim();
+            if (!message) return;
+            
+            // Add user message to chat history
+            chatHistory.push({ role: 'user', content: message });
+            renderChatMessages();
+            
+            // Clear input
+            document.getElementById('chatInput').value = '';
+            
+            // Show loading message
+            chatHistory.push({ role: 'assistant', content: 'AI is thinking...', loading: true });
+            renderChatMessages();
+            
+            try {
+                // Find related articles from all articles
+                const relatedArticles = findRelatedArticles(message, allArticles);
+                
+                // Create enhanced system message with article context
+                let systemMessage = AI_CONFIG.systemMessages.articleContext(
+                    currentArticle.title,
+                    currentArticle.content.overview
+                );
+                
+                // Add related articles context if found
+                if (relatedArticles.length > 0) {
+                    const articleContext = relatedArticles.slice(0, 2).map(article => 
+                        `Related Article: ${article.title}\nContent: ${article.content.overview}\nSettlement: ${article.settlement}`
+                    ).join('\n\n');
+                    
+                    systemMessage += `\n\nAdditional relevant articles:\n${articleContext}`;
+                }
+
+                const requestBody = createApiRequest(message, systemMessage, {
+                    max_tokens: 400
+                });
+
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get AI response');
+                }
+
+                const data = await response.json();
+                
+                // Remove loading message
+                chatHistory = chatHistory.filter(msg => !msg.loading);
+                
+                // Add legal referral if needed
+                let aiText = addLegalReferralIfNeeded(data.response);
+                
+                // Add related articles information if found
+                if (relatedArticles.length > 0) {
+                    aiText += `\n\n📚 **Related Articles:**\n`;
+                    relatedArticles.forEach(article => {
+                        aiText += `• **${article.title}** - ${article.settlement}\n`;
+                    });
+                    aiText += `\nYou can read the full articles for more detailed information.`;
+                } else {
+                    aiText += `\n\n*No relevant articles found at this time.*`;
+                }
+                
+                chatHistory.push({ role: 'assistant', content: aiText });
+                renderChatMessages();
+                
+            } catch (error) {
+                chatHistory = chatHistory.filter(msg => !msg.loading);
+                chatHistory.push({ 
+                    role: 'assistant', 
+                    content: `Sorry, I encountered an error: ${getErrorMessage(error)}. Please try again.` 
+                });
+                renderChatMessages();
+            }
+        }
+
+        async function renderChatMessages() {
+            const chatMessagesDiv = document.getElementById('chatMessages');
+            
+            if (chatHistory.length === 0) {
+                chatMessagesDiv.innerHTML = '<div class="chat-message assistant">Hello! I\'m here to help you with questions about this case. What would you like to know?</div>';
+                return;
+            }
+            
+            // Clear the container
+            chatMessagesDiv.innerHTML = '';
+            
+            // Render each message
+            for (const msg of chatHistory) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message';
+                
+                if (msg.loading) {
+                    messageDiv.className += ' loading';
+                    messageDiv.textContent = msg.content;
+                    chatMessagesDiv.appendChild(messageDiv);
+                } else if (msg.role === 'user') {
+                    messageDiv.className += ' user';
+                    messageDiv.textContent = msg.content;
+                    chatMessagesDiv.appendChild(messageDiv);
+                } else {
+                    messageDiv.className += ' assistant';
+                    const messageId = 'chat-msg-' + Date.now() + Math.random();
+                    messageDiv.innerHTML = `<span id="${messageId}"></span>`;
+                    chatMessagesDiv.appendChild(messageDiv);
+                    
+                    // Apply typing effect for assistant messages
+                    const formattedMessage = markdownToHtml(msg.content);
+                    await typeText(messageId, formattedMessage, 25);
+                }
+                
+                // Scroll to bottom after each message
+                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+            }
+        }
+
+
+    </script>
+</body>
+</html> 
